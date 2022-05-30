@@ -128,6 +128,9 @@ func (s *memoryStore) Check(_ context.Context, sid string) (bool, error) {
 }
 
 func (s *memoryStore) Create(ctx context.Context, sid string, expired int64) (Store, error) {
+	item := newDataItem(sid, nil, expired)
+	s.data[sid] = item
+	s.list.PushBack(item)
 	return newStore(ctx, s, sid, expired, nil), nil
 }
 
